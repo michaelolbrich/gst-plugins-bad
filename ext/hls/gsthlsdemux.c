@@ -827,6 +827,9 @@ gst_hls_demux_handle_buffer (GstAdaptiveDemux * demux,
     hls_stream->pending_pcr_buffer = buffer;
     return GST_FLOW_OK;
   }
+  if (hls_stream->stream_type == GST_HLS_TSREADER_ID3 &&
+      GST_CLOCK_TIME_IS_VALID (first_pcr))
+    stream->fragment.timestamp = first_pcr;
 
   if (buffer) {
     buffer = gst_buffer_make_writable (buffer);
